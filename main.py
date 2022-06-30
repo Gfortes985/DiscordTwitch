@@ -13,7 +13,7 @@ TOKEN = os.getenv('TESTINGMF_DISCORD_TOKEN')
 
 # Authentication with Twitch API.
 client_id = "tfah8w9b6r1m4lfb2nwruofxbuonnn"
-client_secret = "tfah8w9b6r1m4lfb2nwruofxbuonnn"
+client_secret = "g9ptg9x9op375tugrjq73u8w81flt7"
 twitch = Twitch(client_id, client_secret)
 twitch.authenticate_app([])
 TWITCH_STREAM_API_ENDPOINT_V5 = "https://api.twitch.tv/kraken/streams/{}"
@@ -71,7 +71,7 @@ async def on_ready():
                     # Checks to see if the live message has already been sent.
                     async for message in channel.history(limit=200):
                         # If it has, break the loop (do nothing).
-                        if str(user.mention) in message.content and "is now streaming" in message.content:
+                        if str(user.mention) in message.content and "Сейчас стримит" in message.content:
                             break
                         # If it hasn't, assign them the streaming role and send the message.
                         else:
@@ -83,9 +83,9 @@ async def on_ready():
                                     await member.add_roles(role)
                             # Sends the live notification to the 'twitch streams' channel then breaks the loop.
                             await channel.send(
-                                f":red_circle: **LIVE**\n{user.mention} is now streaming on Twitch!"
+                                f":red_circle: **LIVE**\n{user.mention} сейчас стримит на Twitch!"
                                 f"\nhttps://www.twitch.tv/{twitch_name}")
-                            print(f"{user} started streaming. Sending a notification.")
+                            print(f"{user} начал стрим. Уведомление отправлено.")
                             break
                 # If they aren't live do this:
                 else:
@@ -98,7 +98,7 @@ async def on_ready():
                     # Checks to see if the live notification was sent.
                     async for message in channel.history(limit=200):
                         # If it was, delete it.
-                        if str(user.mention) in message.content and "is now streaming" in message.content:
+                        if str(user.mention) in message.content and "сейчас стримит" in message.content:
                             await message.delete()
 
     # Start your loop.
@@ -106,7 +106,7 @@ async def on_ready():
 
 
 # Command to add Twitch usernames to the json.
-@bot.command(name='addtwitch', help='Adds your Twitch to the live notifs.', pass_context=True)
+@bot.command(name='addtwitch', help='Добавляет ваш Twitch в живые уведомления.', pass_context=True)
 async def add_twitch(ctx, twitch_name):
     # Opens and reads the json file.
     with open('streamers.json', 'r') as file:
