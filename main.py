@@ -7,7 +7,7 @@ from twitchAPI.twitch import Twitch
 from discord.utils import get
 
 intents = discord.Intents.all()
-bot = commands.Bot(command_prefix='=', intents=intents)
+bot = commands.Bot(command_prefix='*', intents=intents)
 
 TOKEN = os.getenv('TESTINGMF_DISCORD_TOKEN')
 
@@ -111,12 +111,12 @@ async def add_twitch(ctx, twitch_name):
     # Opens and reads the json file.
     with open('streamers.json', 'r') as file:
         streamers = json.loads(file.read())
-
+    print(twitch_name)
     # Gets the users id that called the command.
     user_id = ctx.author.id
     # Assigns their given twitch_name to their discord id and adds it to the streamers.json.
     streamers[user_id] = twitch_name
-
+    print(streamers)
     # Adds the changes we made to the json file.
     with open('streamers.json', 'w') as file:
         file.write(json.dumps(streamers))
